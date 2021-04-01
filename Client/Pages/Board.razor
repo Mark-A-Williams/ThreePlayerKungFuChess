@@ -1,0 +1,31 @@
+﻿@page "/board"
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+    }
+
+    .vertex {
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: red;
+    }
+</style>
+
+<h1>Board</h1>
+
+<div class="container">
+    @foreach (var vertex in Vertices)
+    {
+        <div class="vertex"
+             style="position: relative;
+                    left: @(40 * vertex.X)px;
+                    bottom: @(40 * vertex.Y)px">
+        </div>
+    }
+</div>
+
