@@ -19,7 +19,9 @@
 
 <h1>Board</h1>
 
-<div class="container">
+<div>@LastClickedMessage</div>
+
+<div @onclick="UpdateLastClickedMessage" class="container">
     @foreach (var vertex in Vertices)
     {
         <div class="vertex"

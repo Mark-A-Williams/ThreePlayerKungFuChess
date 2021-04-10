@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ namespace Client.Pages
     public partial class Board
     {
         private ICollection<Vertex> Vertices;
+
+        private string LastClickedMessage = string.Empty;
 
         protected override void OnInitialized()
         {
@@ -30,6 +34,12 @@ namespace Client.Pages
             }
 
             return vertices.Distinct().ToArray();
+        }
+
+        private void UpdateLastClickedMessage(MouseEventArgs args)
+        {
+        //    LastClickedMessage = JsonConvert.SerializeObject(args).Replace(",", ",\n\n");
+            LastClickedMessage = $"{args.OffsetX}, {args.OffsetY}";
         }
 
         private static List<Vertex> GenerateBottomLeftVertices()
