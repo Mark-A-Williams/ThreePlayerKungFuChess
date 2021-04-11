@@ -1,0 +1,4 @@
+>/BufferHeight 1000 powershell -NoExit -Command "$Host.UI.RawUI.WindowTitle = 'Client'; Set-Location ./Client; dotnet watch run";
+
+/BufferHeight 1000 powershell -new_console:s1T50H -NoExit -Command "Set-Location ./Server; dotnet watch run"
+
