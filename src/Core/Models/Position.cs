@@ -2,7 +2,12 @@
 {
     public class Position
     {
-        public int LongitudinalPosition { get; set; }
         public char TransversePosition { get; set; }
+        public int LongitudinalPosition { get; set; }
+
+        public override string ToString()
+        {
+            return $"{TransversePosition}{LongitudinalPosition}";
+        }
     }
 }
