@@ -35,7 +35,14 @@ namespace PieceMoves.TestApp
                     {
                         MoveLongitudinalByInput(position);
                     }
-                }                
+                }
+
+                var validMovesForRook = MovesService.GetValidMoves(Piece.Rook, Colour.Black, position);
+                Console.WriteLine("Valid moves for a rook from this position are:");
+                foreach (var item in validMovesForRook)
+                {
+                    Console.WriteLine(item);
+                }
             }
         }
 

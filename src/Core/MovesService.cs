@@ -12,6 +12,42 @@ namespace Core
         private static readonly IDictionary<Colour, int> ColourBaselines = new Dictionary<Colour, int>
             { { Colour.White, 1 }, { Colour.Black, 8 }, { Colour.Red, 12 } };
 
+        public static ICollection<Position> GetValidMoves(Piece piece, Colour colour, Position startingPosition)
+        {
+            switch (piece)
+            {
+                case Piece.King:
+                    break;
+                case Piece.Queen:
+                    break;
+                case Piece.Rook:
+                    return CoordinateHelper.GetLongitudinalPositionsForTransverseCoord(startingPosition.TransversePosition).Select(
+                        o => new Position
+                        {
+                            TransversePosition = startingPosition.TransversePosition,
+                            LongitudinalPosition = o
+                        }).Concat(
+                        CoordinateHelper.GetTransversePositionsForLongitudinalCoord(startingPosition.LongitudinalPosition).Select(
+                        o => new Position
+                        {
+                            TransversePosition = o,
+                            LongitudinalPosition = startingPosition.LongitudinalPosition
+                        }))
+                        .Where(o => o.LongitudinalPosition != startingPosition.LongitudinalPosition || o.TransversePosition != startingPosition.TransversePosition)
+                        .ToList();
+                case Piece.Knight:
+                    break;
+                case Piece.Bishop:
+                    break;
+                case Piece.Pawn:
+                    break;
+                default:
+                    throw new NotSupportedException("That's no piece!");
+            }
+
+            throw new Exception();
+        }
+
         /// <summary>
         /// Takes a starting position and the components of a move and returns the new position.
         /// </summary>

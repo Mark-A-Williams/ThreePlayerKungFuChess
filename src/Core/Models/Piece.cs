@@ -1,6 +1,6 @@
 ﻿namespace Core.Models
 {
-    public enum Pieces
+    public enum Piece
     {
         King,
         Queen,
