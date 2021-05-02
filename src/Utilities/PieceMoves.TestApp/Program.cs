@@ -21,12 +21,22 @@ namespace PieceMoves.TestApp
 
             Console.WriteLine($"Your position: {position}");
 
-            Console.WriteLine("How far transverse should the piece move?");
-            var transverseMove = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine("Type T to move transverse or L to move longitudinally");
 
-            var newPosition = MovesService.MoveTransverse(position, transverseMove);
-
-            Console.WriteLine($"New position: {newPosition}");
+                if (char.TryParse(Console.ReadLine(), out char keyPress))
+                {
+                    if (keyPress == 'T')
+                    {
+                        MoveTransverseByInput(position);
+                    }
+                    else if (keyPress == 'L')
+                    {
+                        MoveLongitudinalByInput(position);
+                    }
+                }                
+            }
         }
 
         static char GetTransverseCoordInput()
@@ -61,6 +71,26 @@ namespace PieceMoves.TestApp
             }
 
             return GetLongitudinalCoordInput();
+        }
+
+        static void MoveTransverseByInput(Position position)
+        {
+            Console.WriteLine("How far transverse should the piece move?");
+            var transverseMove = int.Parse(Console.ReadLine());
+
+            var newPosition = MovesService.MoveTransverse(position, transverseMove);
+
+            Console.WriteLine($"New position: {newPosition}");
+        }
+
+        static void MoveLongitudinalByInput(Position position)
+        {
+            Console.WriteLine("How far longitudinal should the piece move?");
+            var longitudinalMove = int.Parse(Console.ReadLine());
+
+            var newPosition = MovesService.MoveLongitudinal(position, longitudinalMove, Colour.White);
+
+            Console.WriteLine($"New position: {newPosition}");
         }
     }
 }

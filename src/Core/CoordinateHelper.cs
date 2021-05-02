@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Models;
+using System;
 using System.Linq;
-using System.Text;
 
 namespace Core
 {
     public static class CoordinateHelper
     {
+        /// <summary>
+        /// Determines if a given position is valid.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static bool IsPositionValid(Position position)
+        {
+            try
+            {
+                var allowableLongitudinalPositions = GetLongitudinalPositionsForTransverseCoord(position.TransversePosition);
+                return allowableLongitudinalPositions.Contains(position.LongitudinalPosition);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Returns the allowable transverse positions (letters) for a given longitudinal one (number).
         /// </summary>
