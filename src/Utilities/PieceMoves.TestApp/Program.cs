@@ -7,7 +7,7 @@ namespace PieceMoves.TestApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var transverseCoord = GetTransverseCoordInput();
 
