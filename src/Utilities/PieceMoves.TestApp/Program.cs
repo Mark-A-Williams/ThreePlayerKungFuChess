@@ -21,6 +21,29 @@ namespace PieceMoves.TestApp
 
             Console.WriteLine($"Your position: {position}");
 
+            // MovePieceOnCommand(position);
+
+            Console.WriteLine("Enter a piece type:");
+            if (Enum.TryParse(Console.ReadLine(), ignoreCase: true, out Piece pieceType))
+            {
+                Console.WriteLine("Enter the piece's colour:");
+                if (Enum.TryParse(Console.ReadLine(), ignoreCase: true, out Colour colour))
+                {
+                    var validMoves = MovesService.GetValidMoves(pieceType, colour, position);
+
+                    Console.WriteLine(
+                        $"Valid moves for a {colour.ToString().ToLowerInvariant()} {pieceType.ToString().ToLowerInvariant()} from this position are:");
+
+                    foreach (var move in validMoves)
+                    {
+                        Console.WriteLine(move);
+                    }
+                }
+            }            
+        }
+
+        static void MovePieceOnCommand(Position position)
+        {
             while (true)
             {
                 Console.WriteLine("Type T to move transverse or L to move longitudinally");
@@ -35,13 +58,6 @@ namespace PieceMoves.TestApp
                     {
                         MoveLongitudinalByInput(position);
                     }
-                }
-
-                var validMovesForRook = MovesService.GetValidMoves(Piece.Rook, Colour.Black, position);
-                Console.WriteLine("Valid moves for a rook from this position are:");
-                foreach (var item in validMovesForRook)
-                {
-                    Console.WriteLine(item);
                 }
             }
         }
