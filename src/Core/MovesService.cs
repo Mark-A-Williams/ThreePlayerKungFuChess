@@ -10,42 +10,35 @@ namespace Core
     {
         // Pointless interface is pointless ¯\_(ツ)_/¯
         private static readonly IDictionary<Colour, int> ColourBaselines = new Dictionary<Colour, int>
-            { { Colour.White, 1 }, { Colour.Black, 8 }, { Colour.Red, 12 } };
+        { 
+            { Colour.White, 1 }, { Colour.Black, 8 }, { Colour.Red, 12 } 
+        };
 
-        public static ICollection<Position> GetValidMoves(Piece piece, Colour colour, Position startingPosition)
+        /// <summary>
+        /// Gets the valid moves from a starting position for a specified piece / colour.
+        /// Does not account for the legality of a move or any pieces that may be in the way - this method works in a vacuum.
+        /// </summary>
+        /// <param name="piece">The piece type e.g. pawn, bishop.</param>
+        /// <param name="startingPosition"></param>
+        /// <param name="colour">The colour of the piece (only necessary for pawns).</param>
+        /// <returns></returns>
+        public static ICollection<Position> GetValidMoves(Piece piece, Position startingPosition, Colour? colour = null)
         {
-            switch (piece)
+            if (piece == Piece.Pawn && !colour.HasValue)
             {
-                case Piece.King:
-                    break;
-                case Piece.Queen:
-                    break;
-                case Piece.Rook:
-                    return CoordinateHelper.GetLongitudinalPositionsForTransverseCoord(startingPosition.TransversePosition).Select(
-                        o => new Position
-                        {
-                            TransversePosition = startingPosition.TransversePosition,
-                            LongitudinalPosition = o
-                        }).Concat(
-                        CoordinateHelper.GetTransversePositionsForLongitudinalCoord(startingPosition.LongitudinalPosition).Select(
-                        o => new Position
-                        {
-                            TransversePosition = o,
-                            LongitudinalPosition = startingPosition.LongitudinalPosition
-                        }))
-                        .Where(o => o.LongitudinalPosition != startingPosition.LongitudinalPosition || o.TransversePosition != startingPosition.TransversePosition)
-                        .ToList();
-                case Piece.Knight:
-                    break;
-                case Piece.Bishop:
-                    break;
-                case Piece.Pawn:
-                    break;
-                default:
-                    throw new NotSupportedException("That's no piece!");
+                throw new ArgumentException("A colour must be provided for pawn moves");
             }
 
-            throw new Exception();
+            return piece switch
+            {
+                Piece.King => PieceMovesService.GetValidMovesForKing(startingPosition),
+                Piece.Queen => PieceMovesService.GetValidMovesForQueen(startingPosition),
+                Piece.Rook => PieceMovesService.GetValidMovesForRook(startingPosition),
+                Piece.Knight => PieceMovesService.GetValidMovesForKnight(startingPosition),
+                Piece.Bishop => PieceMovesService.GetValidMovesForKing(startingPosition),
+                Piece.Pawn => PieceMovesService.GetValidMovesForPawn(startingPosition, colour.Value),
+                _ => throw new NotImplementedException(),
+            };
         }
 
         /// <summary>
